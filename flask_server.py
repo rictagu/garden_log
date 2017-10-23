@@ -4,18 +4,15 @@ from flask_restful import Resource, Api, reqparse
 from flask_mysqldb import MySQL
 from datetime import datetime
 from flask_basicauth import BasicAuth
+import config
 
 app = Flask(__name__)
 mysql = MySQL(app)
 api = Api(app)
 app.config['MYSQL_HOST'] = 'localhost'
-app.config['MYSQL_USER'] = 'root'
-app.config['MYSQL_PASSWORD'] = ''
+app.config['MYSQL_USER'] = config.mysql_user
+app.config['MYSQL_PASSWORD'] = config.mysql_pass
 app.config['MYSQL_DB'] = 'garden'
-app.config['BASIC_AUTH_USERNAME'] = os.environ['AUTH_USER']
-app.config['BASIC_AUTH_PASSWORD'] = os.environ['AUTH_PASS']
-app.config['BASIC_AUTH_FORCE'] = True
-basic_auth = BasicAuth(app)
 
 @app.route("/")
 def main():
@@ -52,4 +49,4 @@ class Log(Resource):
 api.add_resource(Log, '/')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0', debug=True, port=80)

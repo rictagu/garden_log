@@ -24,7 +24,7 @@ class Log(Resource):
 
     def post(self):
         parser = reqparse.RequestParser()
-        parser.add_argument('datetime', type=str, required=True, location='json')
+        parser.add_argument('current_date', type=str, required=True, location='json')
         parser.add_argument('pump', type=int, required=True, location='json')
         parser.add_argument('soil', type=int, required=True, location='json')
         parser.add_argument('temperature', type=int, required=True, location='json')
@@ -37,7 +37,7 @@ class Log(Resource):
             print(args)
             cur = mysql.connection.cursor()
             query = "INSERT INTO garden.logs (datetime, pump, soil, temperature, humidity, rain, light) VALUES "
-            query += "('" + args['datetime'] + "'," + str(args['pump']) + "," + str(args['soil']) + "," + str(args['temperature']) + "," + str(args['humidity']) + "," + str(args['rain']) + "," + str(args['light']) + ");"
+            query += "('" + args['current_date'] + "'," + str(args['pump']) + "," + str(args['soil']) + "," + str(args['temperature']) + "," + str(args['humidity']) + "," + str(args['rain']) + "," + str(args['light']) + ");"
             print(query)
             cur.execute(query)
             mysql.connection.commit()
